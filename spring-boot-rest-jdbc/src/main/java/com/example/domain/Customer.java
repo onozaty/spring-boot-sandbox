@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Customer {
 
     private Integer id;
 
     private String name;
+
+    private String address;
 }

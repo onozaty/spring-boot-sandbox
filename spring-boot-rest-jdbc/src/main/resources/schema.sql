@@ -1,4 +1,5 @@
-CREATE TABLE users (
+CREATE TABLE customers (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(30)
+	name VARCHAR(30) NOT NULL,
+	address VARCHAR(100)
 );
