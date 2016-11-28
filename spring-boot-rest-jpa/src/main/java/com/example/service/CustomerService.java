@@ -24,6 +24,10 @@ public class CustomerService {
         return userRepository.findOne(id);
     }
 
+    public List<Customer> findByName(String name) {
+        return userRepository.findByName(name);
+    }
+
     public Customer create(Customer customer) {
         return userRepository.save(customer);
     }
