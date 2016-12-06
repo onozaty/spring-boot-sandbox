@@ -14,29 +14,29 @@ import com.example.repository.CustomerRepository;
 public class CustomerService {
 
     @Autowired
-    private CustomerRepository userRepository;
+    private CustomerRepository customerRepository;
 
     public List<Customer> findAll() {
-        return userRepository.findAll();
+        return customerRepository.findAll();
     }
 
     public Customer findOne(Integer id) {
-        return userRepository.findOne(id);
+        return customerRepository.findOne(id);
     }
 
     public List<Customer> findByName(String name) {
-        return userRepository.findByName(name);
+        return customerRepository.findByName(name);
     }
 
     public Customer create(Customer customer) {
-        return userRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     public Customer update(Customer customer) {
-        return userRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     public void delete(Integer id) {
-        userRepository.delete(id);
+        customerRepository.delete(id);
     }
 }
