@@ -12,6 +12,6 @@ import com.example.domain.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-    @Query(value = "SELECT * FROM customers WHERE name = :name", nativeQuery = true)
+    @Query(value = "SELECT * FROM customers WHERE name LIKE %:name%", nativeQuery = true)
     public List<Customer> findByName(@Param("name") String name);
 }
