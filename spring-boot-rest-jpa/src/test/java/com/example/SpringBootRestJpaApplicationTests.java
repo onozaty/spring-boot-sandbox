@@ -23,7 +23,7 @@ import com.example.repository.CustomerRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = {
-        "spring.datasource.url=jdbc:log4jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" })
+        "spring.datasource.url=jdbc:log4jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE" })
 public class SpringBootRestJpaApplicationTests {
 
     @Autowired
