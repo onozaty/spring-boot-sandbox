@@ -1,8 +1,10 @@
 package com.example.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -31,10 +33,14 @@ public class CustomerRepository {
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
-        return jdbcTemplate.queryForObject(
-                "SELECT * FROM customers WHERE id = :id",
-                param,
-                new BeanPropertyRowMapper<Customer>(Customer.class));
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM customers WHERE id = :id",
+                    param,
+                    new BeanPropertyRowMapper<Customer>(Customer.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Customer save(Customer customer) {
@@ -64,5 +70,20 @@ public class CustomerRepository {
         jdbcTemplate.update(
                 "DELETE FROM customers WHERE id = :id",
                 param);
+    }
+
+    public List<Customer> findByName(String name) {
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+
+        return jdbcTemplate.query(
+                "SELECT * FROM customers WHERE name LIKE :name ORDER BY id",
+                param,
+                new BeanPropertyRowMapper<Customer>(Customer.class));
+    }
+
+    public void deleteAll() {
+
+        jdbcTemplate.update("DELETE FROM customers", new HashMap<>());
     }
 }
