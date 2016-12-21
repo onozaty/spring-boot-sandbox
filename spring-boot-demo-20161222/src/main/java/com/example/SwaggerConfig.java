@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,9 +27,8 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo());
     }
 
-    @SuppressWarnings("unchecked")
     private Predicate<String> paths() {
-        return Predicates.or(Predicates.containsPattern("/api/*"));
+        return Predicates.or(Arrays.asList(Predicates.containsPattern("/api/*")));
     }
 
     private ApiInfo apiInfo() {
