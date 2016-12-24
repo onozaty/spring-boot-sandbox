@@ -43,16 +43,16 @@ public class SpringBootRestMybatisApplicationTests {
         customer1 = new Customer();
         customer1.setName("Taro");
         customer1.setAddress("Tokyo");
-        customerRepository.save(customer1);
+        customerRepository.insert(customer1);
 
         customer2 = new Customer();
-        customer2.setName("花�?");
-        customer2.setAddress("�?�?");
-        customerRepository.save(customer2);
+        customer2.setName("花子");
+        customer2.setAddress("千葉");
+        customerRepository.insert(customer2);
 
         customer3 = new Customer();
         customer3.setName("Taku");
-        customerRepository.save(customer3);
+        customerRepository.insert(customer3);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class SpringBootRestMybatisApplicationTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         Customer result = response.getBody();
-        assertThat(result.getId()).isEqualTo(customer3.getId() + 1); // �?後に追�?したも�?�+1
+        assertThat(result.getId()).isEqualTo(customer3.getId() + 1); // 最後に追加したもの+1
         assertThat(result.getName()).isEqualTo("Tayler");
         assertThat(result.getAddress()).isEqualTo("New York");
     }

@@ -29,11 +29,13 @@ public class CustomerService {
     }
 
     public Customer create(Customer customer) {
-        return customerRepository.save(customer);
+        customerRepository.insert(customer);
+        return customer;
     }
 
     public Customer update(Customer customer) {
-        return customerRepository.save(customer);
+        customerRepository.update(customer);
+        return customer;
     }
 
     public void delete(Integer id) {
