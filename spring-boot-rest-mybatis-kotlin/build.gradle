@@ -1,0 +1,45 @@
+buildscript {
+	ext {
+		kotlinVersion = '1.0.5-2'
+		springBootVersion = '1.4.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'demo'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.flywaydb:flyway-core')
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+	runtime('com.h2database:h2')
+	compileOnly('org.projectlombok:lombok')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	compile('org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16')
+
+	compile('io.springfox:springfox-swagger2:2.6.1')
+	compile('io.springfox:springfox-swagger-ui:2.6.1')
+}
