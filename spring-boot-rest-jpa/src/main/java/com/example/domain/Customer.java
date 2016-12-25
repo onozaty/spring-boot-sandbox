@@ -19,12 +19,15 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    @ApiModelProperty(position = 1, example = "1", value = "新規追加時は使用しません")
+    @ApiModelProperty(position = 1, example = "1")
     private Integer id;
 
-    @ApiModelProperty(position = 2, example = "名前", required = true)
-    private String name;
+    @ApiModelProperty(position = 2, example = "First Name", required = true)
+    private String firstName;
 
-    @ApiModelProperty(position = 3, example = "住所")
+    @ApiModelProperty(position = 3, example = "Last Name", required = true)
+    private String lastName;
+
+    @ApiModelProperty(position = 4, example = "Address")
     private String address;
 }

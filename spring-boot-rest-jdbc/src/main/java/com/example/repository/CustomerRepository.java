@@ -57,7 +57,9 @@ public class CustomerRepository {
             Number key = insert.executeAndReturnKey(param);
             customer.setId(key.intValue());
         } else {
-            jdbcTemplate.update("UPDATE customers SET name = :name, address = :address WHERE id = :id", param);
+            jdbcTemplate.update(
+                    "UPDATE customers SET first_name = :firstName, last_name = :lastName, address = :address WHERE id = :id",
+                    param);
         }
 
         return customer;
@@ -72,12 +74,12 @@ public class CustomerRepository {
                 param);
     }
 
-    public List<Customer> findByName(String name) {
+    public List<Customer> findByFirstName(String firstName) {
 
-        SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+        SqlParameterSource param = new MapSqlParameterSource().addValue("firstName", "%" + firstName + "%");
 
         return jdbcTemplate.query(
-                "SELECT * FROM customers WHERE name LIKE :name ORDER BY id",
+                "SELECT * FROM customers WHERE first_name LIKE :firstName ORDER BY id",
                 param,
                 new BeanPropertyRowMapper<Customer>(Customer.class));
     }

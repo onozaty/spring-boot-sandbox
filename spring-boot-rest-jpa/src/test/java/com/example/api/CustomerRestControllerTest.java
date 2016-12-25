@@ -38,8 +38,8 @@ public class CustomerRestControllerTest {
     public void getCustomers() throws Exception {
 
         List<Customer> customers = Arrays.asList(
-                new Customer(1, "name1", "address"),
-                new Customer(2, "name2", null));
+                new Customer(1, "firstName1", "lastName1", "address"),
+                new Customer(2, "firstName2", "lastName2", null));
 
         when(customerService.findAll()).thenReturn(customers);
 
@@ -52,7 +52,7 @@ public class CustomerRestControllerTest {
     @Test
     public void getCustomer() throws Exception {
 
-        Customer customer = new Customer(1, "name1", "address");
+        Customer customer = new Customer(1, "firstName1", "lastName1", "address");
 
         when(customerService.findOne(1)).thenReturn(customer);
 

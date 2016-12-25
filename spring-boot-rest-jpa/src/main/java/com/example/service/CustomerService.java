@@ -24,8 +24,8 @@ public class CustomerService {
         return customerRepository.findOne(id);
     }
 
-    public List<Customer> findByName(String name) {
-        return customerRepository.findByName(name);
+    public List<Customer> findByFirstName(String firstName) {
+        return customerRepository.findByFirstName(firstName);
     }
 
     public Customer create(Customer customer) {

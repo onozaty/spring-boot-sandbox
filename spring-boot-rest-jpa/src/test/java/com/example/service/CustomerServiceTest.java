@@ -33,8 +33,8 @@ public class CustomerServiceTest {
 
         List<Customer> customers =
                 Arrays.asList(
-                        new Customer(1, "name1", "address1"),
-                        new Customer(2, "name2", "address2"));
+                        new Customer(1, "firstName1", "lastName1", "address1"),
+                        new Customer(2, "firstName2", "lastName2", "address2"));
 
         when(customerRepository.findAll()).thenReturn(customers);
 

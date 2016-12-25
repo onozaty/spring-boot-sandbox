@@ -18,11 +18,11 @@ interface CustomerRepository {
 	@Select("SELECT * FROM customers WHERE id = #{id}")
 	fun findOne(@Param("id") id: Int): Customer
 
-	@Insert("INSERT INTO customers(name, address) VALUES(#{name}, #{address})")
+	@Insert("INSERT INTO customers(first_name, last_name, address) VALUES(#{firstName}, #{lastName}, #{address})")
 	@SelectKey(statement = arrayOf("call identity()"), keyProperty = "id", before = false, resultType = Int::class)
 	fun insert(customer: Customer)
 
-	@Update("UPDATE customers SET name = #{name}, address = #{address} WHERE id = #{id}")
+	@Update("UPDATE customers SET first_name = #{firstName}, last_name = #{lastName}, address = #{address} WHERE id = #{id}")
 	fun update(customer: Customer)
 
 	@Delete("DELETE FROM customers WHERE id = #{id}")
@@ -34,10 +34,10 @@ interface CustomerRepository {
 	    FROM
 	      customers
 	    WHERE
-	      name LIKE '%${'$'}{name}%'
+	      first_name LIKE '%${'$'}{firstName}%'
 	    ORDER BY id
 	""")
-	fun findByName(@Param("name") name: String): List<Customer>
+	fun findByFirstName(@Param("firstName") firstName: String): List<Customer>
 
 	@Delete("DELETE FROM customers")
 	fun deleteAll()

@@ -35,8 +35,8 @@ public class CustomerRestController {
     }
 
     @GetMapping(path = "/search")
-    public List<Customer> getCustomersByName(@RequestParam String name) {
-        return customerService.findByName(name);
+    public List<Customer> getCustomersByFirstName(@RequestParam String firstName) {
+        return customerService.findByFirstName(firstName);
     }
 
     @PostMapping

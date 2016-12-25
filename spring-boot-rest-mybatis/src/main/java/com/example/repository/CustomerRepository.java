@@ -23,18 +23,18 @@ public interface CustomerRepository {
     @Select("SELECT * FROM customers WHERE id = #{id}")
     public Customer findOne(@Param("id") Integer id);
 
-    @Insert("INSERT INTO customers(name, address) VALUES(#{name}, #{address})")
+    @Insert("INSERT INTO customers(first_name, last_name, address) VALUES(#{firstName}, #{lastName}, #{address})")
     @SelectKey(statement = "call identity()", keyProperty = "id", before = false, resultType = int.class)
     public void insert(Customer customer);
 
-    @Update("UPDATE customers SET name = #{name}, address = #{address} WHERE id = #{id}")
+    @Update("UPDATE customers SET first_name = #{firstName}, last_name = #{lastName}, address = #{address} WHERE id = #{id}")
     public void update(Customer customer);
 
     @Delete("DELETE FROM customers WHERE id = #{id}")
     public void delete(@Param("id") Integer id);
 
-    @Select("SELECT * FROM customers WHERE name LIKE '%${name}%' ORDER BY id")
-    public List<Customer> findByName(@Param("name") String name);
+    @Select("SELECT * FROM customers WHERE first_name LIKE '%${firstName}%' ORDER BY id")
+    public List<Customer> findByFirstName(@Param("firstName") String firstName);
 
     @Delete("DELETE FROM customers")
     public void deleteAll();

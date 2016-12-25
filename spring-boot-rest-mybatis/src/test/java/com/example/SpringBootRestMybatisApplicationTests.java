@@ -41,25 +41,28 @@ public class SpringBootRestMybatisApplicationTests {
         customerRepository.deleteAll();
 
         customer1 = new Customer();
-        customer1.setName("Taro");
+        customer1.setFirstName("Taro");
+        customer1.setLastName("Yamada");
         customer1.setAddress("Tokyo");
         customerRepository.insert(customer1);
 
         customer2 = new Customer();
-        customer2.setName("花子");
+        customer2.setFirstName("花子");
+        customer2.setLastName("山田");
         customer2.setAddress("千葉");
         customerRepository.insert(customer2);
 
         customer3 = new Customer();
-        customer3.setName("Taku");
+        customer3.setFirstName("Taku");
+        customer3.setLastName("Suzuki");
         customerRepository.insert(customer3);
     }
 
     @Test
     public void getCustomers() {
 
-        ResponseEntity<List<Customer>> response = restTemplate.exchange(
-                "/api/customers", HttpMethod.GET, null, new ParameterizedTypeReference<List<Customer>>() {
+        ResponseEntity<List<Customer>> response = restTemplate.exchange("/api/customers", HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Customer>>() {
                 });
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -69,8 +72,8 @@ public class SpringBootRestMybatisApplicationTests {
     @Test
     public void getCustomer() {
 
-        ResponseEntity<Customer> response = restTemplate.getForEntity(
-                "/api/customers/{id}", Customer.class, customer1.getId());
+        ResponseEntity<Customer> response = restTemplate.getForEntity("/api/customers/{id}", Customer.class,
+                customer1.getId());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(customer1);
@@ -79,9 +82,10 @@ public class SpringBootRestMybatisApplicationTests {
     @Test
     public void getCustomersByName() {
 
-        ResponseEntity<List<Customer>> response = restTemplate.exchange(
-                "/api/customers/search?name=a", HttpMethod.GET, null, new ParameterizedTypeReference<List<Customer>>() {
-                });
+        ResponseEntity<List<Customer>> response =
+                restTemplate.exchange("/api/customers/search?firstName=a", HttpMethod.GET,
+                        null, new ParameterizedTypeReference<List<Customer>>() {
+                        });
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).containsOnly(customer1, customer3);
@@ -91,24 +95,38 @@ public class SpringBootRestMybatisApplicationTests {
     public void createCustomer() {
 
         Customer newCustomer = new Customer();
-        newCustomer.setName("Tayler");
+        newCustomer.setFirstName("Tayler");
+        newCustomer.setLastName("Swift");
         newCustomer.setAddress("New York");
 
-        ResponseEntity<Customer> response = restTemplate.postForEntity(
-                "/api/customers", newCustomer, Customer.class);
+        int expectId = customer3.getId() + 1; // 最後に追加したもの+1
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        {
+            ResponseEntity<Customer> response =
+                    restTemplate.postForEntity("/api/customers", newCustomer, Customer.class);
 
-        Customer result = response.getBody();
-        assertThat(result.getId()).isEqualTo(customer3.getId() + 1); // 最後に追加したもの+1
-        assertThat(result.getName()).isEqualTo("Tayler");
-        assertThat(result.getAddress()).isEqualTo("New York");
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+            assertThat(response.getBody())
+                    .hasFieldOrPropertyWithValue("id", expectId)
+                    .isEqualToComparingOnlyGivenFields(newCustomer, "firstName", "lastName", "address");
+        }
+
+        {
+            ResponseEntity<Customer> response = restTemplate.getForEntity("/api/customers/{id}", Customer.class,
+                    expectId);
+
+            assertThat(response.getBody())
+                    .hasFieldOrPropertyWithValue("id", expectId)
+                    .isEqualToComparingOnlyGivenFields(newCustomer, "firstName", "lastName", "address");
+        }
+
     }
 
     @Test
     public void updateCustomer() {
 
-        customer1.setName("New Name");
+        customer1.setFirstName("New Name");
 
         {
             ResponseEntity<Customer> response =
@@ -132,15 +150,15 @@ public class SpringBootRestMybatisApplicationTests {
     public void deleteCustomer() {
 
         {
-            ResponseEntity<Void> response = restTemplate.exchange(
-                    "/api/customers/{id}", HttpMethod.DELETE, null, Void.class, customer1.getId());
+            ResponseEntity<Void> response = restTemplate.exchange("/api/customers/{id}", HttpMethod.DELETE, null,
+                    Void.class, customer1.getId());
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         }
 
         {
-            ResponseEntity<Customer> response = restTemplate.getForEntity(
-                    "/api/customers/{id}", Customer.class, customer1.getId());
+            ResponseEntity<Customer> response = restTemplate.getForEntity("/api/customers/{id}", Customer.class,
+                    customer1.getId());
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNull();
