@@ -105,15 +105,26 @@ public class SpringBootRestJdbcApplicationTests {
     }
 
     @Test
-    public void upateCustomer() {
+    public void updateCustomer() {
 
         customer1.setName("New Name");
 
-        ResponseEntity<Customer> response = restTemplate.postForEntity("/api/customers/{id}", customer1, Customer.class,
-                customer1.getId());
+        {
+            ResponseEntity<Customer> response =
+                    restTemplate.postForEntity("/api/customers/{id}", customer1, Customer.class,
+                            customer1.getId());
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(customer1);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isEqualTo(customer1);
+        }
+
+        {
+            ResponseEntity<Customer> response = restTemplate.getForEntity("/api/customers/{id}", Customer.class,
+                    customer1.getId());
+
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isEqualTo(customer1);
+        }
     }
 
     @Test
