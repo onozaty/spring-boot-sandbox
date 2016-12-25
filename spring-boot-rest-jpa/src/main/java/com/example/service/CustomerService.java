@@ -25,7 +25,7 @@ public class CustomerService {
     }
 
     public List<Customer> findByFirstName(String firstName) {
-        return customerRepository.findByFirstName(firstName);
+        return customerRepository.findByFirstNameContains(firstName);
     }
 
     public Customer create(Customer customer) {
