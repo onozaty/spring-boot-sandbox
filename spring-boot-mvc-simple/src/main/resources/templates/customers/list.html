@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>顧客一覧</title>
+<link rel="stylesheet" type="text/css" href="./../../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+  <form th:action="@{/customers/create}" th:object="${customerForm}" method="post">
+    <dl>
+      <dt>
+        <label for="lastName">姓</label>
+      </dt>
+      <dd>
+        <input type="text" id="lastName" name="lastName" th:field="*{lastName}" th:errorClass="error-input" value="山田" />
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-messages">error!</span>
+      </dd>
+      <dt>
+        <label for="firstName">名</label>
+      </dt>
+      <dd>
+        <input type="text" id="firstName" name="firstName" th:field="*{firstName}" th:errorClass="error-input"
+          value="太郎" />
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-messages">error!</span>
+      </dd>
+    </dl>
+    <input type="submit" value="作成" />
+  </form>
+  <table>
+    <tr th:each="customer : ${customers}">
+      <td th:text="${customer.id}">100</td>
+      <td th:text="${customer.lastName}">Last Name</td>
+      <td th:text="${customer.firstName}">First Name</td>
+      <td>
+        <form th:action="@{/customers/edit}" method="get">
+          <input type="submit" name="form" value="編集" />
+          <input type="hidden" name="id" th:value="${customer.id}" />
+        </form>
+      </td>
+      <td>
+        <form th:action="@{/customers/delete}" method="post">
+          <input type="submit" name="form" value="削除" />
+          <input type="hidden" name="id" th:value="${customer.id}" />
+        </form>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
