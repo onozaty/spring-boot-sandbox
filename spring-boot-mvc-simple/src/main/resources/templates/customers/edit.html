@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>顧客情報編集</title>
+<link rel="stylesheet" type="text/css" href="./../../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+  <form th:action="@{/customers/edit}" th:object="${customerForm}" method="post">
+    <dl>
+      <dt>
+        <label for="lastName">姓</label>
+      </dt>
+      <dd>
+        <input type="text" id="lastName" name="lastName" th:field="*{lastName}" th:errorClass="error-input" value="山田" />
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-messages">error!</span>
+      </dd>
+      <dt>
+        <label for="firstName">名</label>
+      </dt>
+      <dd>
+        <input type="text" id="firstName" name="firstName" th:field="*{firstName}" th:errorClass="error-input"
+          value="太郎" />
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-messages">error!</span>
+      </dd>
+    </dl>
+    <input type="submit" name="goToTop" value="戻る" />
+    <input type="hidden" name="id" th:value="${param.id[0]}" />
+    <input type="submit" value="更新" />
+  </form>
+</body>
+</html>
