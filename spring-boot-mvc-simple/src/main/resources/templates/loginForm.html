@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+  layout:decorator="layout">
+<head>
+<meta charset="UTF-8" />
+<title>ログインフォーム</title>
+</head>
+<body>
+  <div layout:fragment="content" class="col-sm-12">
+    <form class="form-signin" th:action="@{/login}" method="post">
+      <h2 class="form-signin-heading">ログインフォーム</h2>
+      <div th:if="${param.error}" class="alert alert-danger">ユーザ名またはパスワードが正しくありません。</div>
+      <input type="text" class="form-control" name="username" placeholder="Username" required="required"
+        autofocus="autofocus" />
+      <input type="password" class="form-control" name="password" placeholder="Password" required="required" />
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+  </div>
+</body>
+</html>

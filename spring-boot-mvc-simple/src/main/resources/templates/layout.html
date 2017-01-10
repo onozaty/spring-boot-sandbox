@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="ja">
 <meta charset="UTF-8" />
 <title>Layout</title>
@@ -11,6 +12,14 @@
 <body>
   <div class="container">
     <h1>顧客管理システム</h1>
+    <div sec:authorize="isAuthenticated()">
+      <form th:action="@{/logout}" method="post">
+        <p>
+          <span sec:authentication="principal.user.username">duke</span>さんログイン中。
+          <input type="submit" class="btn btn-default btn-xs" value="ログアウト" />
+        </p>
+      </form>
+    </div>
     <div layout:fragment="content">Fake content</div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
