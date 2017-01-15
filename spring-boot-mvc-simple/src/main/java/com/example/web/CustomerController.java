@@ -10,9 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.model.Customer;
 import com.example.domain.service.CustomerService;
@@ -24,11 +24,6 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @ModelAttribute
-    public CustomerForm setupForm() {
-        return new CustomerForm();
-    }
-
     @GetMapping
     public String list(Model model) {
 
@@ -38,11 +33,17 @@ public class CustomerController {
         return "customers/list";
     }
 
+    @GetMapping(path = "new")
+    public String createForm(@ModelAttribute CustomerForm form) {
+
+        return "customers/new";
+    }
+
     @PostMapping("create")
-    public String create(@Validated CustomerForm form, BindingResult result, Model model) {
+    public String create(@ModelAttribute @Validated CustomerForm form, BindingResult result) {
 
         if (result.hasErrors()) {
-            return list(model);
+            return createForm(form);
         }
 
         Customer customer = new Customer();
@@ -53,8 +54,8 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    @GetMapping(path = "edit", params = "form")
-    public String editForm(@RequestParam Integer id, CustomerForm form) {
+    @GetMapping(path = "{id}/edit")
+    public String edit(@PathVariable("id") Integer id, @ModelAttribute CustomerForm form) {
 
         Customer customer = customerService.findOne(id);
         BeanUtils.copyProperties(customer, form);
@@ -62,28 +63,23 @@ public class CustomerController {
         return "customers/edit";
     }
 
-    @PostMapping(path = "edit")
-    public String edit(@RequestParam Integer id, @Validated CustomerForm form, BindingResult result) {
+    @PostMapping(path = "{id}/update")
+    public String update(@PathVariable("id") Integer id, @ModelAttribute @Validated CustomerForm form,
+            BindingResult result) {
 
         if (result.hasErrors()) {
-            return editForm(id, form);
+            return edit(id, form);
         }
 
         Customer customer = new Customer();
         BeanUtils.copyProperties(form, customer);
-        customer.setId(id);
         customerService.update(customer);
 
         return "redirect:/customers";
     }
 
-    @RequestMapping(path = "edit", params = "goToTop")
-    public String goToTop() {
-        return "redirect:/customers";
-    }
-
-    @PostMapping(path = "delete")
-    public String delete(@RequestParam Integer id) {
+    @GetMapping(path = "{id}/delete")
+    public String delete(@PathVariable("id") Integer id) {
 
         customerService.delete(id);
         return "redirect:/customers";

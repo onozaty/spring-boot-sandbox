@@ -3,15 +3,13 @@
   layout:decorator="layout">
 <head>
 <meta charset="UTF-8" />
-<title>顧客情報編集</title>
+<title>顧客情報作成</title>
 </head>
 <body>
   <div layout:fragment="content" class="col-sm-12">
-    <form class="form-horizontal" th:action="@{/customers/{customerId}/update(customerId=${customerForm.id})}"
-      th:object="${customerForm}" method="post">
-      <input type="hidden" name="id" th:field="*{id}" />
+    <form class="form-horizontal" th:action="@{/customers/create}" th:object="${customerForm}" method="post">
       <fieldset>
-        <legend>顧客情報編集</legend>
+        <legend>顧客情報作成</legend>
         <div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error has-feedback'">
           <label for="lastName" class="col-sm-2 control-label">姓</label>
           <div class="col-sm-10">
@@ -30,7 +28,7 @@
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
           <a class="btn btn-default" th:href="@{/customers}">戻る</a>
-          <input type="submit" class="btn btn-primary" value="更新" />
+          <input type="submit" class="btn btn-primary" value="作成" />
         </div>
       </div>
     </form>

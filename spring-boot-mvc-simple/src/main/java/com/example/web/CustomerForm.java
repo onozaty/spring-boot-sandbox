@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class CustomerForm {
 
+    private Integer id;
+
     @NotNull
     @Size(min = 1, max = 30)
     private String firstName;

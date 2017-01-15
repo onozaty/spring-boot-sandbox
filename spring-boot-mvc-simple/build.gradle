@@ -17,12 +17,16 @@ targetCompatibility = 1.8
 
 repositories { mavenCentral() }
 
+configurations {
+    compile.exclude module: 'spring-boot-starter-tomcat'
+}
 
 dependencies {
     compile('org.flywaydb:flyway-core')
     compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-jetty')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.codehaus.groovy:groovy')
     compile("org.springframework.boot:spring-boot-devtools")
@@ -33,6 +37,7 @@ dependencies {
 
     compile('org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16')
     compile('org.webjars:bootstrap:3.3.7')
+    testCompile('org.assertj:assertj-core:3.6.1')
 }
 
 sourceSets {
