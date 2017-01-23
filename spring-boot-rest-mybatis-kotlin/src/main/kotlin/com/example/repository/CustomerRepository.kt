@@ -34,7 +34,7 @@ interface CustomerRepository {
 	    FROM
 	      customers
 	    WHERE
-	      first_name LIKE '%${'$'}{firstName}%'
+	      first_name LIKE '%' || #{firstName} || '%'
 	    ORDER BY id
 	""")
 	fun findByFirstName(@Param("firstName") firstName: String): List<Customer>

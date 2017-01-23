@@ -33,7 +33,7 @@ public interface CustomerRepository {
     @Delete("DELETE FROM customers WHERE id = #{id}")
     public void delete(@Param("id") Integer id);
 
-    @Select("SELECT * FROM customers WHERE first_name LIKE '%${firstName}%' ORDER BY id")
+    @Select("SELECT * FROM customers WHERE first_name LIKE '%' || #{firstName} || '%' ORDER BY id")
     public List<Customer> findByFirstName(@Param("firstName") String firstName);
 
     @Delete("DELETE FROM customers")

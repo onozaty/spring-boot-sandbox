@@ -37,7 +37,7 @@ public interface CustomerRepository {
       FROM
         customers
       WHERE
-        first_name LIKE '%${firstName}%'
+        first_name LIKE '%' || #{firstName} || '%'
       ORDER BY id''')
     public List<Customer> findByFirstName(@Param("firstName") String firstName)
 
