@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>ユーザ管理</title>
+
+    <link href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./list.html" th:href="@{/users}">ユーザ管理</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container">
+      <h1>ユーザ新規作成確認</h1>
+      <form class="form-horizontal" th:action="@{/users/create}" th:object="${userForm}" method="post">
+        <div class="panel panel-default">
+          <div class="panel-heading">ログイン情報</div>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <dt>ログインID</dt>
+              <dd th:text="*{loginId}">admin</dd>
+            </dl>
+            <input type="hidden" th:field="*{loginId}" />
+            <dl class="dl-horizontal">
+              <dt>パスワード</dt>
+              <dd>*****************</dd>
+            </dl>
+            <input type="hidden" th:field="*{password}" />
+            <input type="hidden" th:field="*{confirmPassword}" />
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">ユーザ情報</div>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <dt>名前</dt>
+              <dd th:text="*{lastName} + ' ' + *{firstName}">山田 太郎</dd>
+            </dl>
+            <input type="hidden" th:field="*{lastName}" />
+            <input type="hidden" th:field="*{firstName}" />
+            <dl class="dl-horizontal">
+              <dt>メールアドレス</dt>
+              <dd th:text="*{mailAddress}">user@example.com</dd>
+            </dl>
+            <input type="hidden" th:field="*{mailAddress}" />
+          </div>
+        </div>
+        <div>
+          <button type="submit" name="form" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> 戻る</button>
+          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> 登録</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../static/lib/jquery.min.js" th:src="@{/lib/jquery.min.js}"></script>
+    <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+  </body>
+</html>

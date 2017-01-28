@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>ユーザ管理</title>
+
+    <link href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./list.html" th:href="@{/users}">ユーザ管理</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container">
+      <h1>ユーザ新規作成</h1>
+      <form class="form-horizontal" th:action="@{/users/create(confirm)}" th:object="${userForm}" method="post">
+        <div class="panel panel-default">
+          <div class="panel-heading">ログイン情報</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="inputLoginId" class="col-sm-3 col-md-2 control-label">ログインID</label>
+              <div class="col-sm-5">
+                <input type="text" th:field="*{loginId}" class="form-control" id="inputLoginId" placeholder="ログインID(半角英数)" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-sm-3 col-md-2 control-label">パスワード</label>
+              <div class="col-sm-5">
+                <input type="password" name="password" th:value="*{password}" class="form-control" id="inputPassword" placeholder="パスワード" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputConfirmPassword" class="col-sm-3 col-md-2 control-label">パスワード(確認)</label>
+              <div class="col-sm-5">
+                <input type="password" name="confirmPassword" th:value="*{confirmPassword}" class="form-control" id="inputConfirmPassword" placeholder="パスワード" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">ユーザ情報</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="inputLastName" class="col-sm-3 col-md-2 control-label">名前</label>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <div class="input-group-addon">姓</div>
+                  <input type="text" th:field="*{lastName}" class="form-control" id="inputLastName" placeholder="山田" />
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <div class="input-group-addon">名</div>
+                  <input type="text" th:field="*{firstName}" class="form-control" id="inputFirstName" placeholder="太郎" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputMail" class="col-sm-3 col-md-2 control-label">メールアドレス</label>
+              <div class="col-sm-6">
+                <input type="text" th:field="*{mailAddress}" class="form-control" id="inputMail" placeholder="user@example.com" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a href="list.html" th:href="@{/users}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> 戻る</a>
+          <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 確認</button>
+        </div>
+      </form>
+    </div>
+    
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../static/lib/jquery.min.js" th:src="@{/lib/jquery.min.js}"></script>
+    <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+  </body>
+</html>

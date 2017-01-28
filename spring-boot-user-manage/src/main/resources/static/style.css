@@ -1,0 +1,12 @@
+body {
+  font-family: Meiryo, Verdana, Arial, sans-serif;
+}
+
+body > .container {
+  padding: 60px 15px 15px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
