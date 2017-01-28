@@ -17,10 +17,10 @@ public abstract class JsonTypeHandler<T> extends BaseTypeHandler<T> {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    private final Class<T> jsonType;
+    private final Class<T> javaType;
 
-    public JsonTypeHandler(Class<T> jsonType) {
-        this.jsonType = jsonType;
+    public JsonTypeHandler(Class<T> javaType) {
+        this.javaType = javaType;
     }
 
     @Override
@@ -37,29 +37,29 @@ public abstract class JsonTypeHandler<T> extends BaseTypeHandler<T> {
     @Override
     public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
 
-        return toTargetObject(rs.getObject(columnName));
+        return toJavaTypeObject(rs.getObject(columnName));
     }
 
     @Override
     public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 
-        return toTargetObject(rs.getObject(columnIndex));
+        return toJavaTypeObject(rs.getObject(columnIndex));
     }
 
     @Override
     public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 
-        return toTargetObject(cs.getObject(columnIndex));
+        return toJavaTypeObject(cs.getObject(columnIndex));
     }
 
-    private T toTargetObject(Object value) throws SQLException {
+    private T toJavaTypeObject(Object value) throws SQLException {
 
         if (value == null) {
             return null;
         }
 
         try {
-            return mapper.readValue(value.toString(), jsonType);
+            return mapper.readValue(value.toString(), javaType);
         } catch (IOException e) {
             throw new SQLException(e);
         }

@@ -18,12 +18,19 @@ public class InformationRepositoryTest {
     private InformationRepository repository;
 
     @Test
-    public void insert() {
+    public void test() {
 
         JsonData jsonData = new JsonData(1, Arrays.asList("x"));
         Information information = new Information(null, "test", Arrays.asList(1, 2), Arrays.asList("a", "b"), jsonData);
 
         repository.insert(information);
         assertThat(information.getId()).isNotNull();
+
+        information.setText("after");
+
+        repository.update(information);
+        
+        Information result = repository.find(information.getId());
+        assertThat(result).isEqualTo(information);
     }
 }
