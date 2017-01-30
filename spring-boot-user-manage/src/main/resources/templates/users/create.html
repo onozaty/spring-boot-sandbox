@@ -36,22 +36,25 @@
         <div class="panel panel-default">
           <div class="panel-heading">ログイン情報</div>
           <div class="panel-body">
-            <div class="form-group">
+            <div class="form-group" th:classappend="${#fields.hasErrors('loginId')}? 'has-error'">
               <label for="inputLoginId" class="col-sm-3 col-md-2 control-label">ログインID</label>
-              <div class="col-sm-5">
+              <div class="col-sm-6">
                 <input type="text" th:field="*{loginId}" class="form-control" id="inputLoginId" placeholder="ログインID(半角英数)" />
+                <span th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}" class="help-block">error!</span>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
               <label for="inputPassword" class="col-sm-3 col-md-2 control-label">パスワード</label>
-              <div class="col-sm-5">
+              <div class="col-sm-6">
                 <input type="password" name="password" th:value="*{password}" class="form-control" id="inputPassword" placeholder="パスワード" />
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help-block">error!</span>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error'">
               <label for="inputConfirmPassword" class="col-sm-3 col-md-2 control-label">パスワード(確認)</label>
-              <div class="col-sm-5">
+              <div class="col-sm-6">
                 <input type="password" name="confirmPassword" th:value="*{confirmPassword}" class="form-control" id="inputConfirmPassword" placeholder="パスワード" />
+                <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="help-block">error!</span>
               </div>
             </div>
           </div>
@@ -61,23 +64,26 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="inputLastName" class="col-sm-3 col-md-2 control-label">名前</label>
-              <div class="col-sm-4">
+              <div class="col-sm-4" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
                 <div class="input-group">
                   <div class="input-group-addon">姓</div>
                   <input type="text" th:field="*{lastName}" class="form-control" id="inputLastName" placeholder="山田" />
                 </div>
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="help-block">error!</span>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-4" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
                 <div class="input-group">
                   <div class="input-group-addon">名</div>
                   <input type="text" th:field="*{firstName}" class="form-control" id="inputFirstName" placeholder="太郎" />
                 </div>
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="help-block">error!</span>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" th:classappend="${#fields.hasErrors('mailAddress')}? 'has-error'">
               <label for="inputMail" class="col-sm-3 col-md-2 control-label">メールアドレス</label>
               <div class="col-sm-6">
                 <input type="text" th:field="*{mailAddress}" class="form-control" id="inputMail" placeholder="user@example.com" />
+                <span th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="help-block">error!</span>
               </div>
             </div>
           </div>

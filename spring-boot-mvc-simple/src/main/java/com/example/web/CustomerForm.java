@@ -3,6 +3,8 @@ package com.example.web;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lombok.Data;
 
 @Data
@@ -10,11 +12,9 @@ public class CustomerForm {
 
     private Integer id;
 
-    @NotNull
-    @Size(min = 1, max = 30)
+    @NotEmpty
     private String firstName;
 
-    @NotNull
-    @Size(min = 1, max = 30)
+    @NotEmpty
     private String lastName;
 }
