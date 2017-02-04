@@ -55,6 +55,11 @@ interface UserRepository {
     User find(int id)
 
     @Select('''
+      SELECT * FROM users WHERE login_id = #{loginId}
+    ''')
+    User findByLoginId(String loginId)
+
+    @Select('''
       SELECT * FROM users ORDER BY login_id
     ''')
     List<User> findAll()

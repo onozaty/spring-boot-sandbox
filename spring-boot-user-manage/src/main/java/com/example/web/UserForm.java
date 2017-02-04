@@ -1,6 +1,5 @@
 package com.example.web;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -12,7 +11,7 @@ import com.example.web.validation.Confirm;
 import lombok.Data;
 
 @Data
-@Confirm(field = "password") 
+@Confirm(field = "password")
 public class UserForm {
 
     private Integer id;
@@ -21,12 +20,10 @@ public class UserForm {
     @Pattern(regexp = "[0-9a-zA-Z_]*")
     private String loginId;
 
-    @Min(8)
-    @NotEmpty
+    @Size(min = 8, max = 20)
     private String password;
 
-    @Min(8)
-    @NotEmpty
+    @Size(min = 8, max = 20)
     private String confirmPassword;
 
     @NotEmpty

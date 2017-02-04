@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Layout</title>
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" href="../static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link th:href="@{/style.css}" href="../static/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">ユーザ管理</span>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse" sec:authorize="isAuthenticated()">
+          <form th:action="@{/logout}" method="post" class="navbar-form navbar-right">
+           <div class="form-group">
+             <span sec:authentication="principal.user.lastName">山田</span>
+             <span sec:authentication="principal.user.firstName">太郎</span>
+             <button type="submit" class="btn btn-default btn-sm">ログアウト</button>
+           </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <!-- Begin page content -->
+    <div class="container" layout:fragment="content">
+    </div>
+    <!-- End page content -->
+    <script th:src="@{/lib/jquery.min.js}" src="../static/lib/jquery.min.js"></script>
+    <script th:src="@{/lib/bootstrap/js/bootstrap.min.js}" src="../static/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script layout:fragment="script">
+    </script>
+  </body>
+</html>

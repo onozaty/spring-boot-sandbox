@@ -1,38 +1,23 @@
 ﻿<!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+  layout:decorator="layout">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-
     <title>ユーザ管理</title>
-
     <link href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
     <link href="../../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
   </head>
-
   <body>
-
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="./list.html" th:href="@{/users}">ユーザ管理</a>
-        </div>
-      </div>
     </nav>
-
     <!-- Begin page content -->
-    <div class="container">
+    <div class="container" layout:fragment="content">
       <h1>ユーザ一覧</h1>
-      <p><a class="btn btn-primary" href="new.html" th:href="@{/users/create(form)}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新規作成</a></p>
+      <p><a class="btn btn-primary" href="new.html" th:href="@{/users/create(form)}">新規作成</a></p>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -48,18 +33,13 @@
             <td th:text="${user.lastName} + ' ' + ${user.firstName}">山田 太郎</td>
             <td th:text="${user.mailAddress}">yamada_taro@example.com</td>
             <td>
-              <a class="btn btn-info btn-sm" href="detail.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 詳細</a>
-              <a class="btn btn-primary btn-sm" href="edit.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 編集</a>
-              <a class="btn btn-danger btn-sm" href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 削除</a>
+              <a class="btn btn-primary btn-sm" href="edit.html">編集</a>
+              <a class="btn btn-danger btn-sm" href="#">削除</a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../static/lib/jquery.min.js" th:src="@{/lib/jquery.min.js}"></script>
     <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
   </body>

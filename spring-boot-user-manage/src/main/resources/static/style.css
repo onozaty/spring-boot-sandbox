@@ -10,3 +10,13 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Signin */
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin button {
+  margin-top: 10px;
+}

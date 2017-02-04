@@ -45,20 +45,20 @@ public class UserController {
             return createForm(form);
         }
 
-        return "users/create-confirm";
+        return "users/createConfirm";
     }
 
     @PostMapping("create")
     public String create(@ModelAttribute @Validated UserForm form, BindingResult result) {
 
-        if (result.hasErrors()) {
-            return createForm(form);
-        }
+        User user = User.builder()
+                .loginId(form.getLoginId())
+                .lastName(form.getLastName())
+                .firstName(form.getFirstName())
+                .mailAddress(form.getMailAddress())
+                .build();
 
-        User user = new User(
-                form.getLoginId(), form.getPassword(), form.getLastName(), form.getFirstName(), form.getMailAddress());
-
-        userService.create(user);
+        userService.create(user, form.getPassword());
 
         return "redirect:/users";
     }
