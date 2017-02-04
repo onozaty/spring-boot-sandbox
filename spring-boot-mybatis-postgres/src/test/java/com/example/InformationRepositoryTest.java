@@ -29,7 +29,7 @@ public class InformationRepositoryTest {
         information.setText("after");
 
         repository.update(information);
-        
+
         Information result = repository.find(information.getId());
         assertThat(result).isEqualTo(information);
     }

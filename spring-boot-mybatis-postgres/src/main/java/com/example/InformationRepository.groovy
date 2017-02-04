@@ -35,13 +35,13 @@ interface InformationRepository {
 
     @Update('''
       UPDATE informations
-        SET text = #{information.text},
-            int_array = #{information.intArray, typeHandler=com.example.typehandler.IntegerListTypeHandler},
-            text_array = #{information.textArray, typeHandler=com.example.typehandler.StringListTypeHandler},
-            json = #{information.json, typeHandler=com.example.JsonDataTypeHandler}
-        WHERE id = #{information.id}
+        SET text = #{text},
+            int_array = #{intArray, typeHandler=com.example.typehandler.IntegerListTypeHandler},
+            text_array = #{textArray, typeHandler=com.example.typehandler.StringListTypeHandler},
+            json = #{json, typeHandler=com.example.JsonDataTypeHandler}
+        WHERE id = #{id}
     ''')
-    void update(@Param('information') Information information)
+    void update(Information information)
 
     @Results([
         @Result(property = 'intArray', column = 'int_array', typeHandler = IntegerListTypeHandler),
