@@ -36,8 +36,16 @@ public class UserService {
         repository.create(user);
     }
 
-    public void update(User user) {
+    public void update(User user, String rawPassword) {
+
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        user.setEncodedPassword(encodedPassword);
+
         repository.update(user);
+    }
+
+    public void updateWithoutPassword(User user) {
+        repository.updateWithoutPassword(user);
     }
 
     public void delete(int id) {

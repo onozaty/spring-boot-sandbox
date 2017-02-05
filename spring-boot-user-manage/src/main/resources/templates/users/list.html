@@ -33,8 +33,12 @@
             <td th:text="${user.lastName} + ' ' + ${user.firstName}">山田 太郎</td>
             <td th:text="${user.mailAddress}">yamada_taro@example.com</td>
             <td>
-              <a class="btn btn-primary btn-sm" href="edit.html">編集</a>
-              <a class="btn btn-danger btn-sm" href="#">削除</a>
+              <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post">
+                <a th:href="@{/users/{id}/update(id=${user.id},form)}" href="detail.html" class="btn btn-info btn-sm">編集</a>
+                <button type="submit" class="btn btn-danger btn-sm delete-user" data-user="山田 太郎" 
+                    th:attr="data-user=${user.lastName} + ' ' + ${user.firstName}">削除
+                </button>
+              </form>
             </td>
           </tr>
         </tbody>
@@ -42,5 +46,10 @@
     </div>
     <script src="../../static/lib/jquery.min.js" th:src="@{/lib/jquery.min.js}"></script>
     <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script layout:fragment="script">
+      $('form button.delete-user').on('click', function() {
+        return (confirm('「' + $(this).data('user') + '」を削除しますがよろしいですか？'));
+      });
+    </script>
   </body>
 </html>
