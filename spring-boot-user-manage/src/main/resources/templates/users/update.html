@@ -90,12 +90,10 @@
       var chenageEnabledPassword = function() {
         if ($('#inputChangePassword').prop("checked")) {
           $('#inputPassword, #inputConfirmPassword')
-            .removeAttr('disabled')
-            .val('');
+            .removeAttr('disabled');
         } else {
           $('#inputPassword, #inputConfirmPassword')
-            .attr('disabled', 'disabled')
-            .val('**********');
+            .attr('disabled', 'disabled');
         }
       }
 

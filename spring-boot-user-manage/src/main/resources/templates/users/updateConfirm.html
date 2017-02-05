@@ -30,6 +30,7 @@
               <dt>パスワード</dt>
               <dd th:text="*{changePassword} ? '**********' : '変更しない'">**********</dd>
             </dl>
+            <input type="hidden" th:field="*{changePassword}" />
             <input th:if="*{changePassword}" type="hidden" th:field="*{password}" />
             <input th:if="*{changePassword}" type="hidden" th:field="*{confirmPassword}" />
           </div>
