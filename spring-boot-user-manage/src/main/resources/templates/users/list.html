@@ -17,6 +17,17 @@
     <!-- Begin page content -->
     <div class="container" layout:fragment="content">
       <h1>ユーザ一覧</h1>
+      <div th:if="${errorDeleteMyself}" th:text="#{users.errorDeleteMyself}"
+        class="alert alert-danger" role="alert">...</div>
+      <div th:if="${successCreateUser != null}"
+        th:text="#{users.successCreateUser(${successCreateUser.lastName} + ' ' + ${successCreateUser.lastName})}"
+        class="alert alert-success" role="alert">...</div>
+      <div th:if="${successUpdateUser != null}"
+        th:text="#{users.successUpdateUser(${successUpdateUser.lastName} + ' ' + ${successUpdateUser.lastName})}"
+        class="alert alert-success" role="alert">...</div>
+      <div th:if="${successDeleteUser != null}"
+        th:text="#{users.successDeleteUser(${successDeleteUser.lastName} + ' ' + ${successDeleteUser.lastName})}"
+        class="alert alert-success" role="alert">...</div>
       <p><a class="btn btn-primary" href="new.html" th:href="@{/users/create(form)}">新規作成</a></p>
       <table class="table table-bordered">
         <thead>

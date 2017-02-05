@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.model.User;
 import com.example.domain.service.LoginUserDetails;
@@ -52,7 +53,8 @@ public class UserController {
     }
 
     @PostMapping("create")
-    public String create(@ModelAttribute @Validated UserForm form, BindingResult result) {
+    public String create(
+            @ModelAttribute @Validated UserForm form, BindingResult result, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             return createForm(form);
@@ -66,6 +68,8 @@ public class UserController {
                 .build();
 
         userService.create(user, form.getPassword());
+
+        redirectAttributes.addFlashAttribute("successCreateUser", user);
 
         return "redirect:/users";
     }
@@ -103,8 +107,8 @@ public class UserController {
 
     @PostMapping("{id}/update")
     public String update(
-            @AuthenticationPrincipal LoginUserDetails userDetails,
-            @PathVariable("id") int userId, @ModelAttribute @Validated UserForm form, BindingResult result) {
+            @AuthenticationPrincipal LoginUserDetails userDetails, @PathVariable("id") int userId,
+            @ModelAttribute @Validated UserForm form, BindingResult result, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             return updateRedo(form);
@@ -124,13 +128,34 @@ public class UserController {
             userService.updateWithoutPassword(user);
         }
 
+        User loginUser = userDetails.getUser();
+        if (loginUser.getId().equals(user.getId())) {
+            loginUser.setLastName(user.getLastName());
+            loginUser.setFirstName(user.getFirstName());
+        }
+
+        redirectAttributes.addFlashAttribute("successUpdateUser", user);
+
         return "redirect:/users";
     }
 
     @PostMapping("{id}/delete")
-    public String delete(@PathVariable("id") int userId) {
+    public String delete(
+            @AuthenticationPrincipal LoginUserDetails userDetails, @PathVariable("id") int userId,
+            RedirectAttributes redirectAttributes) {
+
+        if (userDetails.getUser().getId().equals(userId)) {
+            redirectAttributes.addFlashAttribute("errorDeleteMyself", true);
+            return "redirect:/users";
+        }
+
+        User user = userService.find(userId);
 
         userService.delete(userId);
+
+        if (user != null) {
+            redirectAttributes.addFlashAttribute("successDeleteUser", user);
+        }
 
         return "redirect:/users";
     }
