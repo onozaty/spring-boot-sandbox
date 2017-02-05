@@ -29,7 +29,7 @@
         th:text="#{users.successDeleteUser(${successDeleteUser.lastName} + ' ' + ${successDeleteUser.lastName})}"
         class="alert alert-success" role="alert">...</div>
       <p><a class="btn btn-primary" href="new.html" th:href="@{/users/create(form)}">新規作成</a></p>
-      <table class="table table-bordered">
+      <table id="userTable" class="table table-bordered" style="display:none">
         <thead>
           <tr>
             <th>ログインID</th>
@@ -58,6 +58,8 @@
     <script src="../../static/lib/jquery.min.js" th:src="@{/lib/jquery.min.js}"></script>
     <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
     <script layout:fragment="script">
+      Helper.createDataTable('#userTable');
+
       $('form button.delete-user').on('click', function() {
         return (confirm('「' + $(this).data('user') + '」を削除しますがよろしいですか？'));
       });
