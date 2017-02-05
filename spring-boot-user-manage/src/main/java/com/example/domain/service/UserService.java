@@ -28,6 +28,12 @@ public class UserService {
         return repository.find(id);
     }
 
+    public boolean unusedLoginId(String loginId, Integer id) {
+        User user = repository.findByLoginId(loginId);
+
+        return user == null || user.getId().equals(id);
+    }
+
     public void create(User user, String rawPassword) {
 
         String encodedPassword = passwordEncoder.encode(rawPassword);

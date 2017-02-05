@@ -7,11 +7,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.example.web.validation.Confirm;
+import com.example.web.validation.UnusedLoginId;
 
 import lombok.Data;
 
 @Data
 @Confirm(field = "password")
+@UnusedLoginId
 public class UserForm {
 
     private Integer id;

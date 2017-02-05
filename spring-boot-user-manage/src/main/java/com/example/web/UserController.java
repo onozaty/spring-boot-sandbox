@@ -54,6 +54,10 @@ public class UserController {
     @PostMapping("create")
     public String create(@ModelAttribute @Validated UserForm form, BindingResult result) {
 
+        if (result.hasErrors()) {
+            return createForm(form);
+        }
+
         User user = User.builder()
                 .loginId(form.getLoginId())
                 .lastName(form.getLastName())
@@ -100,7 +104,11 @@ public class UserController {
     @PostMapping("{id}/update")
     public String update(
             @AuthenticationPrincipal LoginUserDetails userDetails,
-            @PathVariable("id") int userId, @ModelAttribute UserForm form) {
+            @PathVariable("id") int userId, @ModelAttribute @Validated UserForm form, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return updateRedo(form);
+        }
 
         User user = User.builder()
                 .id(userId)
