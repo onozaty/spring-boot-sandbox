@@ -24,10 +24,26 @@ public class Scheduler {
         Thread.sleep(1000);
     }
 
+    @Scheduled(fixedDelayString = "${scheduler.fixed-delay}")
+    public void doFixedDelayString() throws InterruptedException {
+
+        log.info(String.format("fixedDelayString: %s", LocalDateTime.now()));
+
+        Thread.sleep(1000);
+    }
+
     @Scheduled(fixedRate = 5000)
     public void doFixedRate() throws InterruptedException {
 
         log.info(String.format("fixedRate: %s", LocalDateTime.now()));
+
+        Thread.sleep(1000);
+    }
+
+    @Scheduled(fixedRateString = "${scheduler.fixed-rate}")
+    public void doFixedRateString() throws InterruptedException {
+
+        log.info(String.format("fixedRateString: %s", LocalDateTime.now()));
 
         Thread.sleep(1000);
     }
