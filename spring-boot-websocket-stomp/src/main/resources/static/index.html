@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>チャット</title>
+<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>チャット</h2>
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label for="roomName" class="col-sm-2 control-label">ルーム</label>
+        <div class="col-sm-2">
+          <input id="roomName" type="text" class="form-control" value="example" />
+        </div>
+        <div class="col-sm-3">
+          <button id="connectButton" type="button" class="btn btn-default">接続</button>
+          <button id="disconnectButton" class="btn btn-default">切断</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message" class="col-sm-2 control-label">メッセージ</label>
+        <div class="col-sm-4">
+          <input id="message" type="text" class="form-control" />
+        </div>
+        <div class="col-sm-2">
+          <button id="sendButton" type="button" class="btn btn-default">送信</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-2">
+          <ul id="messageList" class="list-unstyled">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/webjars/jquery/1.12.4/jquery.min.js"></script>
+  <script src="/webjars/stomp-websocket/2.3.3-1/stomp.js"></script>
+  <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    $(function() {
+      var endpoint = 'ws://' + location.host + '/endpoint';
+      var subscribePrefix = '/topic/';
+      var stompClient = null;
+
+      $('#connectButton').click(function() {
+
+        $("#messageList").empty();
+
+        stompClient = Stomp.over(new WebSocket(endpoint));
+        stompClient.connect({}, function() {
+          stompClient.subscribe(
+              subscribePrefix + $('#roomName').val(),
+              function(message) {
+                $('#messageList').prepend($('<li>').text(message.body));
+              });
+
+          $('#roomName').prop('disabled', true);
+          $('#connectButton').prop('disabled', true);
+          $('#disconnectButton').prop('disabled', false);
+        });
+      });
+
+      $('#disconnectButton').click(function() {
+
+        stompClient.disconnect();
+        stompClient = null;
+
+        $('#roomName').prop('disabled', false);
+        $('#connectButton').prop('disabled', false);
+        $('#disconnectButton').prop('disabled', true);
+      });
+
+      $('#sendButton').click(function() {
+        if (!stompClient) {
+          alert('未接続です。');
+          return;
+        }
+
+        stompClient.send(subscribePrefix + $('#roomName').val(), {}, $('#message').val());
+      });
+    });
+  </script>
+</body>
+</html>
