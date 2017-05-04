@@ -48,7 +48,7 @@
 
         $("#messageList").empty();
 
-        webSocket = new WebSocket(endpoint + '?' +  $('#roomName').val());
+        webSocket = new WebSocket(endpoint + '?' + encodeURIComponent($('#roomName').val()));
         webSocket.onopen = function() {
           $('#roomName').prop('disabled', true);
           $('#connectButton').prop('disabled', true);
