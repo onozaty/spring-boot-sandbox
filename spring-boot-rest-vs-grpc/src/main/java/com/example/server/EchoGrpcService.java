@@ -16,14 +16,12 @@ public class EchoGrpcService extends EchoImplBase {
     @Override
     public void echo(EchoRequest request, StreamObserver<EchoReply> responseObserver) {
 
-        log.info("start: " + request.getMessage());
+        log.info("gRPC: " + request.getMessage());
 
         EchoReply reply = EchoReply.newBuilder()
                 .setMessage(request.getMessage())
                 .build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
-
-        log.info("end: " + request.getMessage());
     }
 }
