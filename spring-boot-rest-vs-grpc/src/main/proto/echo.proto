@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "com.example.server";
+
+service Echo {
+  rpc echo (EchoRequest) returns (EchoReply) {}
+}
+
+message EchoRequest {
+  string message = 1;
+}
+
+message EchoReply {
+  string message = 1;
+}
