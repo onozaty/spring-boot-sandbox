@@ -45,3 +45,7 @@ dependencies {
 	compile('io.springfox:springfox-swagger2:2.6.1')
 	compile('io.springfox:springfox-swagger-ui:2.6.1')
 }
+
+springBoot {
+    mainClass = "com.example.SpringBootRestJdbcApplication"
+}
