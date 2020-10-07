@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +55,7 @@ public class CustomerRestControllerTest {
 
         Customer customer = new Customer(1, "firstName1", "lastName1", "address");
 
-        when(customerService.findOne(1)).thenReturn(customer);
+        when(customerService.findOne(1)).thenReturn(Optional.of(customer));
 
         mvc.perform(get("/api/customers/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON))
