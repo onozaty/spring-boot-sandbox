@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer findOne(Integer id) {
-        return customerRepository.findOne(id);
+    public Optional<Customer> findOne(Integer id) {
+        return customerRepository.findById(id);
     }
 
     public List<Customer> findByFirstName(String firstName) {
@@ -37,6 +38,6 @@ public class CustomerService {
     }
 
     public void delete(Integer id) {
-        customerRepository.delete(id);
+        customerRepository.deleteById(id);
     }
 }

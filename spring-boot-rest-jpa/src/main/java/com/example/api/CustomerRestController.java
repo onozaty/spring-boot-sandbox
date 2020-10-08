@@ -1,6 +1,7 @@
 package com.example.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class CustomerRestController {
     }
 
     @GetMapping(path = "{id}")
-    public Customer getCustomer(@PathVariable Integer id) {
+    public Optional<Customer> getCustomer(@PathVariable Integer id) {
         return customerService.findOne(id);
     }
 
