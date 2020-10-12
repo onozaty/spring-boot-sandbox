@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,15 +20,15 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(position = 1, example = "1")
+    @Schema(example = "1")
     private Integer id;
 
-    @ApiModelProperty(position = 2, example = "First Name", required = true)
+    @Schema(example = "First Name", required = true)
     private String firstName;
 
-    @ApiModelProperty(position = 3, example = "Last Name", required = true)
+    @Schema(example = "Last Name", required = true)
     private String lastName;
 
-    @ApiModelProperty(position = 4, example = "Address")
+    @Schema(example = "Address")
     private String address;
 }
