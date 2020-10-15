@@ -38,8 +38,7 @@ public class UploadControllerTest {
                     HttpEntity<PathResource> request = new HttpEntity<>(resource);
 
                     ResponseEntity<Void> response = testRestTemplate.postForEntity("/api/upload", request, Void.class);
-                    assertThat(response)
-                            .returns(HttpStatus.OK, ResponseEntity::getStatusCode);
+                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
                 });
     }
 
