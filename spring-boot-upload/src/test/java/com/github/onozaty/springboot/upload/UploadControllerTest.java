@@ -28,9 +28,9 @@ public class UploadControllerTest {
     @Test
     public void test() throws URISyntaxException {
 
-        Path testFilePath = Paths.get(this.getClass().getResource("1000000.txt").toURI());
+        Path testFilePath = Paths.get(this.getClass().getResource("1000.txt").toURI());
 
-        IntStream.rangeClosed(1, 2000)
+        IntStream.rangeClosed(1, 10000)
                 .parallel()
                 .forEach(x -> {
 
