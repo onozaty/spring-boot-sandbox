@@ -30,7 +30,7 @@ public class UploadControllerTest {
 
         Path testFilePath = Paths.get(this.getClass().getResource("1000.txt").toURI());
 
-        IntStream.rangeClosed(1, 10000)
+        IntStream.rangeClosed(1, 20000)
                 .parallel()
                 .forEach(x -> {
 
