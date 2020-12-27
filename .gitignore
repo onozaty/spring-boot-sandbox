@@ -3,3 +3,4 @@
 **/build/
 **/h2db/
 spring-boot-upload/save-dir/
+**/.vagrant/
