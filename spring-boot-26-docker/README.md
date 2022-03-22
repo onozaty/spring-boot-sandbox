@@ -72,7 +72,7 @@ public class Application {
 `Dockerfile` として下記を用意します。
 
 ```
-FROM openjdk:11-jdk-alpine
+FROM openjdk:11-jre-slim-bullseye
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
@@ -83,3 +83,14 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 docker build --build-arg JAR_FILE=build/libs/\*.jar -t onozaty/spring-boot-26-docker
 ```
+
+`docker run`で実行します。
+
+```
+docker run -p 8080:8080 onozaty/spring-boot-26-docker
+```
+
+下記URLにアクセスし、`Hello Docker World` と表示されることを確認します。
+
+* http://localhost:8080/
+
