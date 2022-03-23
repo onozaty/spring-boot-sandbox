@@ -120,3 +120,15 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 docker build -t onozaty/spring-boot-26-docker .
 ```
+
+## Cloud Native Buildpacks
+
+Cloud Native Buildpacks を使ってイメージを作成するための`bootBuildImage`タスクがある。この際にDockerfileは不要。
+
+```
+./gradlew bootBuildImage
+```
+
+```
+docker run -p 8080:8080 spring-boot-26-docker:0.0.1-SNAPSHOT
+```
