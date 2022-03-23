@@ -81,7 +81,7 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 `docker build`します。
 
 ```
-docker build --build-arg JAR_FILE=build/libs/\*.jar -t onozaty/spring-boot-26-docker
+docker build --build-arg JAR_FILE=build/libs/\*.jar -t onozaty/spring-boot-26-docker .
 ```
 
 `docker run`で実行します。
@@ -94,3 +94,29 @@ docker run -p 8080:8080 onozaty/spring-boot-26-docker
 
 * http://localhost:8080/
 
+## マルチステージビルドに変更
+
+`Dockerfile` を下記のように変更します。
+
+```
+# Build Application
+FROM openjdk:11-jdk-slim-bullseye AS build
+WORKDIR /tmp
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+RUN ["./gradlew", "bootJar"]
+
+# Build Docker Image
+FROM openjdk:11-jre-slim-bullseye
+COPY --from=build /tmp/build/libs/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+```
+
+`docker build`します。
+
+```
+docker build -t onozaty/spring-boot-26-docker .
+```
