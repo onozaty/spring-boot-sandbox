@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -15,12 +15,12 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.example.domain.Customer;
 import com.example.repository.CustomerRepository;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = {
         "spring.datasource.url=jdbc:log4jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE" })
 public class SpringBootRestMybatisApplicationTests {
@@ -35,7 +35,7 @@ public class SpringBootRestMybatisApplicationTests {
     private Customer customer2;
     private Customer customer3;
 
-    @Before
+    @BeforeEach
     public void setup() {
 
         customerRepository.deleteAll();
@@ -108,8 +108,10 @@ public class SpringBootRestMybatisApplicationTests {
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
             assertThat(response.getBody())
-                    .hasFieldOrPropertyWithValue("id", expectId)
-                    .isEqualToComparingOnlyGivenFields(newCustomer, "firstName", "lastName", "address");
+                    .returns(expectId, Customer::getId)
+                    .returns(newCustomer.getFirstName(), Customer::getFirstName)
+                    .returns(newCustomer.getLastName(), Customer::getLastName)
+                    .returns(newCustomer.getAddress(), Customer::getAddress);
         }
 
         {
@@ -117,8 +119,10 @@ public class SpringBootRestMybatisApplicationTests {
                     expectId);
 
             assertThat(response.getBody())
-                    .hasFieldOrPropertyWithValue("id", expectId)
-                    .isEqualToComparingOnlyGivenFields(newCustomer, "firstName", "lastName", "address");
+                    .returns(expectId, Customer::getId)
+                    .returns(newCustomer.getFirstName(), Customer::getFirstName)
+                    .returns(newCustomer.getLastName(), Customer::getLastName)
+                    .returns(newCustomer.getAddress(), Customer::getAddress);
         }
 
     }
