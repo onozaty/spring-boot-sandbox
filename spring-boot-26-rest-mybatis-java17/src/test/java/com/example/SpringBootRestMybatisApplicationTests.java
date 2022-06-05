@@ -40,22 +40,14 @@ public class SpringBootRestMybatisApplicationTests {
 
         customerRepository.deleteAll();
 
-        customer1 = new Customer();
-        customer1.setFirstName("Taro");
-        customer1.setLastName("Yamada");
-        customer1.setAddress("Tokyo");
-        customerRepository.insert(customer1);
+        customerRepository.insert(new Customer(1, "Taro", "Yamada", "Tokyo"));
+        customer1 = customerRepository.findLast();
 
-        customer2 = new Customer();
-        customer2.setFirstName("花子");
-        customer2.setLastName("山田");
-        customer2.setAddress("千葉");
-        customerRepository.insert(customer2);
+        customerRepository.insert(new Customer(2, "花子", "山田", "千葉"));
+        customer2 = customerRepository.findLast();
 
-        customer3 = new Customer();
-        customer3.setFirstName("Taku");
-        customer3.setLastName("Suzuki");
-        customerRepository.insert(customer3);
+        customerRepository.insert(new Customer(3, "Taku", "Suzuki", null));
+        customer3 = customerRepository.findLast();
     }
 
     @Test
@@ -73,7 +65,7 @@ public class SpringBootRestMybatisApplicationTests {
     public void getCustomer() {
 
         ResponseEntity<Customer> response = restTemplate.getForEntity("/api/customers/{id}", Customer.class,
-                customer1.getId());
+                customer1.id());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(customer1);
@@ -94,12 +86,9 @@ public class SpringBootRestMybatisApplicationTests {
     @Test
     public void createCustomer() {
 
-        Customer newCustomer = new Customer();
-        newCustomer.setFirstName("Tayler");
-        newCustomer.setLastName("Swift");
-        newCustomer.setAddress("New York");
+        Customer newCustomer = new Customer(null, "Tayler", "Swift", "New York");
 
-        int expectId = customer3.getId() + 1; // 最後に追加したもの+1
+        int expectId = customer3.id() + 1; // 最後に追加したもの+1
 
         {
             ResponseEntity<Customer> response =
@@ -108,10 +97,10 @@ public class SpringBootRestMybatisApplicationTests {
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
             assertThat(response.getBody())
-                    .returns(expectId, Customer::getId)
-                    .returns(newCustomer.getFirstName(), Customer::getFirstName)
-                    .returns(newCustomer.getLastName(), Customer::getLastName)
-                    .returns(newCustomer.getAddress(), Customer::getAddress);
+                    .returns(expectId, Customer::id)
+                    .returns(newCustomer.firstName(), Customer::firstName)
+                    .returns(newCustomer.lastName(), Customer::lastName)
+                    .returns(newCustomer.address(), Customer::address);
         }
 
         {
@@ -119,10 +108,10 @@ public class SpringBootRestMybatisApplicationTests {
                     expectId);
 
             assertThat(response.getBody())
-                    .returns(expectId, Customer::getId)
-                    .returns(newCustomer.getFirstName(), Customer::getFirstName)
-                    .returns(newCustomer.getLastName(), Customer::getLastName)
-                    .returns(newCustomer.getAddress(), Customer::getAddress);
+                    .returns(expectId, Customer::id)
+                    .returns(newCustomer.firstName(), Customer::firstName)
+                    .returns(newCustomer.lastName(), Customer::lastName)
+                    .returns(newCustomer.address(), Customer::address);
         }
 
     }
@@ -130,23 +119,23 @@ public class SpringBootRestMybatisApplicationTests {
     @Test
     public void updateCustomer() {
 
-        customer1.setFirstName("New Name");
+        Customer editedCustomer = new Customer(customer1.id(), "New Name", customer1.lastName(), customer1.address());
 
         {
             ResponseEntity<Customer> response =
-                    restTemplate.postForEntity("/api/customers/{id}", customer1, Customer.class,
-                            customer1.getId());
+                    restTemplate.postForEntity("/api/customers/{id}", editedCustomer, Customer.class,
+                            editedCustomer.id());
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(response.getBody()).isEqualTo(customer1);
+            assertThat(response.getBody()).isEqualTo(editedCustomer);
         }
 
         {
             ResponseEntity<Customer> response = restTemplate.getForEntity("/api/customers/{id}", Customer.class,
-                    customer1.getId());
+                    editedCustomer.id());
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(response.getBody()).isEqualTo(customer1);
+            assertThat(response.getBody()).isEqualTo(editedCustomer);
         }
     }
 
@@ -155,14 +144,14 @@ public class SpringBootRestMybatisApplicationTests {
 
         {
             ResponseEntity<Void> response = restTemplate.exchange("/api/customers/{id}", HttpMethod.DELETE, null,
-                    Void.class, customer1.getId());
+                    Void.class, customer1.id());
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         }
 
         {
             ResponseEntity<Customer> response = restTemplate.getForEntity("/api/customers/{id}", Customer.class,
-                    customer1.getId());
+                    customer1.id());
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNull();

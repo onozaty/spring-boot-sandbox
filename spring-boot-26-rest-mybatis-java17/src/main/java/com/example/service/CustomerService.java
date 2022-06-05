@@ -20,7 +20,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer findOne(Integer id) {
+    public Customer findOne(int id) {
         return customerRepository.findOne(id);
     }
 
@@ -30,11 +30,11 @@ public class CustomerService {
 
     public Customer create(Customer customer) {
         customerRepository.insert(customer);
-        return customer;
+        return customerRepository.findLast();
     }
 
-    public Customer update(Customer customer) {
-        customerRepository.update(customer);
+    public Customer update(int id, Customer customer) {
+        customerRepository.update(id, customer);
         return customer;
     }
 

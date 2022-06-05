@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +34,7 @@ FROM
 WHERE
   id = #{id}
     """)
-    public Customer findOne(@Param("id") Integer id);
+    public Customer findOne(@Param("id") int id);
 
     @Insert("""
 INSERT INTO customers(
@@ -49,19 +48,28 @@ VALUES(
   , #{address}
 )
 """)
-    @SelectKey(statement = "call identity()", keyProperty = "id", before = false, resultType = int.class)
     public void insert(Customer customer);
+
+    @Select("""
+SELECT
+  *
+FROM
+  customers
+WHERE
+  id = SCOPE_IDENTITY()
+    """)
+    public Customer findLast();
 
     @Update("""
 UPDATE customers
   SET
-    first_name = #{firstName}
-    , last_name = #{lastName}
-    , address = #{address}
+    first_name = #{customer.firstName}
+    , last_name = #{customer.lastName}
+    , address = #{customer.address}
 WHERE
   id = #{id}
 """)
-    public void update(Customer customer);
+    public void update(@Param("id") int id, @Param("customer") Customer customer);
 
     @Delete("""
 DELETE FROM customers

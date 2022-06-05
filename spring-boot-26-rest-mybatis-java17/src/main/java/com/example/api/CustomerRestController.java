@@ -47,8 +47,7 @@ public class CustomerRestController {
 
     @PostMapping(path = "{id}")
     public Customer upateCustomer(@PathVariable Integer id, @RequestBody Customer customer) {
-        customer.setId(id);
-        return customerService.update(customer);
+        return customerService.update(id, customer);
     }
 
     @DeleteMapping(path = "{id}")
