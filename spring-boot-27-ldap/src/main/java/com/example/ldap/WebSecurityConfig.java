@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,10 +25,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDnPatterns("uid={0},ou=people")
                 .groupSearchBase("ou=groups")
                 .contextSource()
-                .url("ldap://localhost:8389/dc=springframework,dc=org")
+                .url("ldap://localhost:8389/dc=example,dc=com")
                 .and()
                 .passwordCompare()
-                .passwordEncoder(new BCryptPasswordEncoder())
+                .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .passwordAttribute("userPassword");
     }
 
