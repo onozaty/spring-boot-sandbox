@@ -19,30 +19,30 @@ dn: cn=user,ou=groups,dc=example,dc=com
 cn: user
 objectClass: groupOfUniqueNames
 objectClass: top
-uniquemember: uid=admin,ou=people,dc=example,dc=com
-uniquemember: uid=user,ou=people,dc=example,dc=com
+uniquemember: uid=taro,ou=people,dc=example,dc=com
+uniquemember: uid=hanako,ou=people,dc=example,dc=com
 
 dn: ou=people,dc=example,dc=com
 objectClass: top
 objectClass: organizationalUnit
 ou: people
 
-dn: uid=admin,ou=people,dc=example,dc=com
-cn: admin
+dn: uid=taro,ou=people,dc=example,dc=com
+cn: Taro, Yamada
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson
 objectClass: inetOrgPerson
-sn: admin
-uid: admin
-userPassword: adminpassword
+sn: Taro
+uid: taro
+userPassword: $2a$08$cf6mjdn16R09lrCdQQb5NuGzi1m6g5JeTakFAfsk6dbtepoh0ckh.
 
-dn: uid=user,ou=people,dc=example,dc=com
-cn: user
+dn: uid=hanako,ou=people,dc=example,dc=com
+cn: Hanako, Yamada
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson
 objectClass: inetOrgPerson
-sn: user
-uid: user
-userPassword: userpassword
+sn: Hanako
+uid: hanako
+userPassword: $2a$08$qe6uyixO/SwhfIfQGwdOM.yt8OVcGSRESInc5dodO2vcSL51oFtJC
