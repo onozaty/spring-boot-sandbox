@@ -13,14 +13,14 @@ dn: cn=admin,ou=groups,dc=example,dc=com
 cn: admin
 objectClass: groupOfUniqueNames
 objectClass: top
-uniquemember: uid=admin,ou=people,dc=example,dc=com
+uniqueMember: uid=taro,ou=people,dc=example,dc=com
 
 dn: cn=user,ou=groups,dc=example,dc=com
 cn: user
 objectClass: groupOfUniqueNames
 objectClass: top
-uniquemember: uid=taro,ou=people,dc=example,dc=com
-uniquemember: uid=hanako,ou=people,dc=example,dc=com
+uniqueMember: uid=taro,ou=people,dc=example,dc=com
+uniqueMember: uid=hanako,ou=people,dc=example,dc=com
 
 dn: ou=people,dc=example,dc=com
 objectClass: top
