@@ -1,0 +1,35 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.github.onozaty'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudAzureVersion', "4.3.0") // 4.4.0 だとうまく動かない
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.azure.spring:spring-cloud-azure-starter-active-directory'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
