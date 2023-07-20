@@ -81,13 +81,13 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 `docker build`します。
 
 ```
-docker build --build-arg JAR_FILE=build/libs/\*.jar -t onozaty/spring-boot-26-docker .
+docker build --build-arg JAR_FILE=build/libs/\*.jar -t onozaty/spring-boot-docker .
 ```
 
 `docker run`で実行します。
 
 ```
-docker run -p 8080:8080 onozaty/spring-boot-26-docker
+docker run -p 8080:8080 onozaty/spring-boot-docker
 ```
 
 下記URLにアクセスし、`Hello Docker World` と表示されることを確認します。
@@ -118,7 +118,7 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 `docker build`します。
 
 ```
-docker build -t onozaty/spring-boot-26-docker .
+docker build -t onozaty/spring-boot-docker .
 ```
 
 ## Cloud Native Buildpacks
@@ -130,5 +130,5 @@ Cloud Native Buildpacks を使ってイメージを作成するための`bootBui
 ```
 
 ```
-docker run -p 8080:8080 spring-boot-26-docker:0.0.1-SNAPSHOT
+docker run -p 8080:8080 spring-boot-docker:0.0.1-SNAPSHOT
 ```
