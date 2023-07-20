@@ -2,6 +2,12 @@
 
 * https://spring.io/guides/gs/spring-boot-docker/
 
+バージョン情報は下記の通りです。
+
+* Spring Boot 3.1.2
+* Java 17
+* Gradle 7.6.2
+
 ## Spring Initializr で雛形を作る
 
 Spring Initializr でプロジェクトの雛形を作成します。
@@ -17,44 +23,49 @@ Gradle Projectにしました。
 
 ```gradle
 plugins {
-	id 'org.springframework.boot' version '2.6.4'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'java'
+    id 'org.springframework.boot' version '3.1.2'
+    id 'io.spring.dependency-management' version '1.1.2'
 }
 
 group = 'com.github.onozaty'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+
+java {
+    sourceCompatibility = '17'
+}
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 ```
 
 ## アプリケーション作成
 
-`Application.java` に http://localhost:8080 でのリクエストを受け付けるメソッドを用意します
+`Application.java` に http://localhost:8080 でのリクエストを受け付けるメソッドを用意します。
 
 ```java
+package com.github.onozaty.springboot.docker;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
 public class Application {
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String home() {
         return "Hello Docker World";
     }
@@ -62,6 +73,7 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+
 }
 ```
 
@@ -72,13 +84,14 @@ public class Application {
 `Dockerfile` として下記を用意します。
 
 ```
-FROM openjdk:11-jre-slim-bullseye
-ARG JAR_FILE=target/*.jar
+FROM eclipse-temurin:17-jdk-alpine
+VOLUME /tmp
+ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-`docker build`します。
+Gradleでbuildした後に、`docker build`します。
 
 ```
 docker build --build-arg JAR_FILE=build/libs/\*.jar -t onozaty/spring-boot-docker .
@@ -100,7 +113,7 @@ docker run -p 8080:8080 onozaty/spring-boot-docker
 
 ```
 # Build Application
-FROM openjdk:11-jdk-slim-bullseye AS build
+FROM eclipse-temurin:17-jdk-alpine AS build
 WORKDIR /tmp
 COPY gradlew .
 COPY gradle gradle
@@ -110,7 +123,7 @@ COPY src src
 RUN ["./gradlew", "bootJar"]
 
 # Build Docker Image
-FROM openjdk:11-jre-slim-bullseye
+FROM eclipse-temurin:17-jdk-alpine
 COPY --from=build /tmp/build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
@@ -123,7 +136,7 @@ docker build -t onozaty/spring-boot-docker .
 
 ## Cloud Native Buildpacks
 
-Cloud Native Buildpacks を使ってイメージを作成するための`bootBuildImage`タスクがある。この際にDockerfileは不要。
+Cloud Native Buildpacks を使ってイメージを作成するための`bootBuildImage`タスクがあります。この際にDockerfileは不要です。
 
 ```
 ./gradlew bootBuildImage

@@ -1,5 +1,5 @@
 # Build Application
-FROM openjdk:11-jdk-slim-bullseye AS build
+FROM eclipse-temurin:17-jdk-alpine AS build
 WORKDIR /tmp
 COPY gradlew .
 COPY gradle gradle
@@ -9,6 +9,6 @@ COPY src src
 RUN ["./gradlew", "bootJar"]
 
 # Build Docker Image
-FROM openjdk:11-jre-slim-bullseye
+FROM eclipse-temurin:17-jdk-alpine
 COPY --from=build /tmp/build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
