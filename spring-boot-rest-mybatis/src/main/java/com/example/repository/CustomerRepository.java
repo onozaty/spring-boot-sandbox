@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +24,7 @@ public interface CustomerRepository {
     public Customer findOne(@Param("id") Integer id);
 
     @Insert("INSERT INTO customers(first_name, last_name, address) VALUES(#{firstName}, #{lastName}, #{address})")
-    @SelectKey(statement = "call identity()", keyProperty = "id", before = false, resultType = int.class)
+    @Options(useGeneratedKeys=true, keyColumn="id", keyProperty = "id")
     public void insert(Customer customer);
 
     @Update("UPDATE customers SET first_name = #{firstName}, last_name = #{lastName}, address = #{address} WHERE id = #{id}")
