@@ -19,7 +19,7 @@ import com.example.domain.Customer;
 import com.example.repository.CustomerRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = {
-        "spring.datasource.url=jdbc:log4jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE" })
+        "spring.datasource.url=jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE" })
 public class SpringBootRestMybatisApplicationTests {
 
     @Autowired
